@@ -1,13 +1,8 @@
-# functions.py — functions for working with the "Library" database.
-
 import sqlite3
 
-# --- SQL queries that create the tables ---
 
 def create_tables(conn):
-    """Creates the three tables: books, authors, readers."""
     cursor = conn.cursor()
-    # books: value was renamed to year (the publication year)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS books (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,7 +10,6 @@ def create_tables(conn):
             year INTEGER
         )
     """)
-    # authors: value was renamed to birth_year (the year of birth)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS authors (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,7 +17,6 @@ def create_tables(conn):
             birth_year INTEGER
         )
     """)
-    # readers: value was renamed to age (the age)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS readers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,8 +26,6 @@ def create_tables(conn):
     """)
     conn.commit()
 
-
-# --- Data: books ---
 
 BOOKS = [
     ("Мастер и Маргарита", 1967),
@@ -47,8 +38,6 @@ BOOKS = [
     ("Собачье сердце", 1987),
 ]
 
-# --- Data: authors ---
-
 AUTHORS = [
     ("Михаил Булгаков", 1891),
     ("Александр Пушкин", 1799),
@@ -59,8 +48,6 @@ AUTHORS = [
     ("Антон Чехов", 1860),
     ("Максим Горький", 1868),
 ]
-
-# --- Data: readers ---
 
 READERS = [
     ("Иван Петров", 17),
@@ -76,7 +63,6 @@ READERS = [
 
 
 def insert_data(conn):
-    """Adds the initial data to all three tables."""
     cursor = conn.cursor()
     cursor.executemany("INSERT INTO books (title, year) VALUES (?, ?)", BOOKS)
     cursor.executemany("INSERT INTO authors (name, birth_year) VALUES (?, ?)", AUTHORS)
@@ -84,22 +70,16 @@ def insert_data(conn):
     conn.commit()
 
 
-# --- Functions for main.py ---
-
-# Only these table names are allowed here:
-# if something else is passed, the function returns an empty answer.
 TABLES = ["books", "authors", "readers"]
 
-# Which number column each table has (after renaming value)
 VALUE_COLUMNS = {
-    "books": "year",          # the publication year of the book
-    "authors": "birth_year",  # the year of birth of the author
-    "readers": "age",         # the age of the reader
+    "books": "year",
+    "authors": "birth_year",
+    "readers": "age",
 }
 
 
 def get_all(conn, table):
-    """Returns all records from a table."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return []
@@ -109,7 +89,6 @@ def get_all(conn, table):
 
 
 def find_by_id(conn, table, record_id):
-    """Finds one record by its id."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return None
@@ -119,12 +98,10 @@ def find_by_id(conn, table, record_id):
 
 
 def find_by_name(conn, table, name):
-    """Finds records by the book title or the author/reader name."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return []
     cursor = conn.cursor()
-    # for books we search in the title column, for the rest — in name
     if table == "books":
         column = "title"
     else:
@@ -135,12 +112,10 @@ def find_by_name(conn, table, name):
 
 
 def add_record(conn, table, name, value):
-    """Adds a new record to a table."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return
     cursor = conn.cursor()
-    # pick the right name of the number column: year, birth_year or age
     value_column = VALUE_COLUMNS[table]
     if table == "books":
         cursor.execute("INSERT INTO books (title, " + value_column + ") "
@@ -152,10 +127,6 @@ def add_record(conn, table, name, value):
 
 
 def update_value(conn, table, record_id, new_value):
-    """Updates the number column of a record by its id.
-
-    In books it is year, in authors — birth_year, in readers — age.
-    """
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return
@@ -167,7 +138,6 @@ def update_value(conn, table, record_id, new_value):
 
 
 def delete_record(conn, table, record_id):
-    """Deletes a record by its id."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return
