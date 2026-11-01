@@ -1,13 +1,13 @@
-# functions.py — функции для работы с базой данных "Библиотека".
+# functions.py — functions for working with the "Library" database.
 
 import sqlite3
 
-# --- SQL-запросы создания таблиц (после переименования value) ---
+# --- SQL queries that create the tables ---
 
 def create_tables(conn):
-    """Создаёт три таблицы: books, authors, readers."""
+    """Creates the three tables: books, authors, readers."""
     cursor = conn.cursor()
-    # books: value переименовали в year (год издания)
+    # books: value was renamed to year (the publication year)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS books (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,7 +15,7 @@ def create_tables(conn):
             year INTEGER
         )
     """)
-    # authors: value переименовали в birth_year (год рождения)
+    # authors: value was renamed to birth_year (the year of birth)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS authors (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,7 +23,7 @@ def create_tables(conn):
             birth_year INTEGER
         )
     """)
-    # readers: value переименовали в age (возраст)
+    # readers: value was renamed to age (the age)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS readers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,7 +34,7 @@ def create_tables(conn):
     conn.commit()
 
 
-# --- Данные: книги ---
+# --- Data: books ---
 
 BOOKS = [
     ("Мастер и Маргарита", 1967),
@@ -47,7 +47,7 @@ BOOKS = [
     ("Собачье сердце", 1987),
 ]
 
-# --- Данные: авторы ---
+# --- Data: authors ---
 
 AUTHORS = [
     ("Михаил Булгаков", 1891),
@@ -60,7 +60,7 @@ AUTHORS = [
     ("Максим Горький", 1868),
 ]
 
-# --- Данные: читатели ---
+# --- Data: readers ---
 
 READERS = [
     ("Иван Петров", 17),
@@ -76,7 +76,7 @@ READERS = [
 
 
 def insert_data(conn):
-    """Добавляет начальные данные во все три таблицы."""
+    """Adds the initial data to all three tables."""
     cursor = conn.cursor()
     cursor.executemany("INSERT INTO books (title, year) VALUES (?, ?)", BOOKS)
     cursor.executemany("INSERT INTO authors (name, birth_year) VALUES (?, ?)", AUTHORS)
@@ -84,22 +84,22 @@ def insert_data(conn):
     conn.commit()
 
 
-# --- Функции для main.py ---
+# --- Functions for main.py ---
 
-# Здесь можно пользоваться только этими названиями таблиц:
-# если пришло что-то другое — функция вернёт пустой ответ.
+# Only these table names are allowed here:
+# if something else is passed, the function returns an empty answer.
 TABLES = ["books", "authors", "readers"]
 
-# Какое поле с числом в каждой таблице (после переименования value)
+# Which number column each table has (after renaming value)
 VALUE_COLUMNS = {
-    "books": "year",          # год издания книги
-    "authors": "birth_year",  # год рождения автора
-    "readers": "age",         # возраст читателя
+    "books": "year",          # the publication year of the book
+    "authors": "birth_year",  # the year of birth of the author
+    "readers": "age",         # the age of the reader
 }
 
 
 def get_all(conn, table):
-    """Получить все записи из таблицы."""
+    """Returns all records from a table."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return []
@@ -109,7 +109,7 @@ def get_all(conn, table):
 
 
 def find_by_id(conn, table, record_id):
-    """Найти одну запись по её id."""
+    """Finds one record by its id."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return None
@@ -119,12 +119,12 @@ def find_by_id(conn, table, record_id):
 
 
 def find_by_name(conn, table, name):
-    """Найти записи по названию книги или имени автора/читателя."""
+    """Finds records by the book title or the author/reader name."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return []
     cursor = conn.cursor()
-    # для books ищем по полю title, для остальных — по name
+    # for books we search in the title column, for the rest — in name
     if table == "books":
         column = "title"
     else:
@@ -135,12 +135,12 @@ def find_by_name(conn, table, name):
 
 
 def add_record(conn, table, name, value):
-    """Добавить новую запись в таблицу."""
+    """Adds a new record to a table."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return
     cursor = conn.cursor()
-    # выбираем правильное имя числового поля: year, birth_year или age
+    # pick the right name of the number column: year, birth_year or age
     value_column = VALUE_COLUMNS[table]
     if table == "books":
         cursor.execute("INSERT INTO books (title, " + value_column + ") "
@@ -152,9 +152,9 @@ def add_record(conn, table, name, value):
 
 
 def update_value(conn, table, record_id, new_value):
-    """Изменить числовое поле записи по её id.
+    """Updates the number column of a record by its id.
 
-    В books это year, в authors — birth_year, в readers — age.
+    In books it is year, in authors — birth_year, in readers — age.
     """
     if table not in TABLES:
         print("Нет такой таблицы:", table)
@@ -167,7 +167,7 @@ def update_value(conn, table, record_id, new_value):
 
 
 def delete_record(conn, table, record_id):
-    """Удалить запись по её id."""
+    """Deletes a record by its id."""
     if table not in TABLES:
         print("Нет такой таблицы:", table)
         return

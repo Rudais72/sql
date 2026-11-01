@@ -1,4 +1,4 @@
-# terminal.py — текстовое меню для работы с базой в терминале.
+# terminal.py — a text menu for working with the database in the terminal.
 
 import sqlite3
 import functions
@@ -7,7 +7,7 @@ DB_NAME = "for_game.db"
 
 
 def show_all(conn):
-    """Пункт 1: показать все записи из выбранной таблицы."""
+    """Menu option 1: show all records from the chosen table."""
     table = input("Какую таблицу показать (books / authors / readers)?: ")
     rows = functions.get_all(conn, table)
     if not rows:
@@ -18,7 +18,7 @@ def show_all(conn):
 
 
 def add(conn):
-    """Пункт 2: добавить новую запись."""
+    """Menu option 2: add a new record."""
     table = input("В какую таблицу добавить (books / authors / readers)?: ")
     if table == "books":
         name = input("Название книги: ")
@@ -30,7 +30,7 @@ def add(conn):
 
 
 def update(conn):
-    """Пункт 3: изменить числовое поле у записи."""
+    """Menu option 3: update the number column of a record."""
     table = input("В какой таблице изменить (books / authors / readers)?: ")
     record_id = int(input("id записи: "))
     row = functions.find_by_id(conn, table, record_id)
@@ -49,7 +49,7 @@ def update(conn):
 
 
 def delete(conn):
-    """Пункт 4: удалить запись."""
+    """Menu option 4: delete a record."""
     table = input("Из какой таблицы удалить (books / authors / readers)?: ")
     record_id = int(input("id записи: "))
     row = functions.find_by_id(conn, table, record_id)
@@ -61,7 +61,7 @@ def delete(conn):
 
 
 def main():
-    """Работа меню: показываем варианты, пока не выберут 0."""
+    """The menu loop: keep showing the options until 0 is chosen."""
     conn = sqlite3.connect(DB_NAME)
     functions.create_tables(conn)
 
