@@ -1,74 +1,74 @@
-# Библиотека
+# Library
 
-Учебный проект. Это простая база данных «Библиотека» на Python.
-Внутри три таблицы:
+A study project. It is a simple "Library" database on Python.
+It has three tables:
 
-- **books** — книги (название и год издания)
-- **authors** — авторы (имя и год рождения)
-- **readers** — читатели (имя и возраст)
+- **books** (a book title and the year it was published)
+- **authors** (a name and the year of birth)
+- **readers** (a name and the age)
 
-## Файлы проекта
+## Project files
 
-- `app.py` — главный файл, им и запускаем проект
-- `main.py` — создаёт базу данных `for_game.db` и заполняет её
-- `functions.py` — функции: показать, найти, добавить, изменить, удалить
-- `terminal.py` — меню в консоли (1 — показать всё, 2 — добавить, 3 — изменить, 4 — удалить, 0 — выход)
+- `app.py` — the main file, we start the project with it
+- `main.py` — creates the database `for_game.db` and fills it with data
+- `functions.py` — functions: show, find, add, update, delete
+- `terminal.py` — the console menu (1 — show all, 2 — add, 3 — update, 4 — delete, 0 — exit)
 
-## Как установить и запустить (Mac / Linux)
+## How to install and run (Mac / Linux)
 
-Нужен Python 3 (он уже установлен почти на всех компах).
+You need Python 3 (it is already installed on most computers).
 
-1. Открыть терминал и перейти в папку проекта:
+1. Open the terminal and go to the project folder:
 
 ```bash
-cd путь/к/sql_danielsR
+cd path/to/sql_danielsR
 ```
 
-2. Запустить:
+2. Run the project:
 
 ```bash
 python3 app.py
 ```
 
-Сначала создастся база `for_game.db` с книгами, авторами и читателями.
-Потом откроется меню — дальше просто вводим цифру и следуем подсказкам.
+First the database `for_game.db` will be created with books, authors and readers.
+Then the menu will open — just type a number and follow the hints.
 
-## Как скачать и запустить на Windows
+## How to download and run on Windows
 
-1. **Установить Python.**
-   Зайти на сайт https://www.python.org/downloads/ и скачать установщик.
-   При установке ОБЯЗАТЕЛЬНО поставить галочку **«Add Python to PATH»**.
+1. **Install Python.**
+   Go to https://www.python.org/downloads/ and download the installer.
+   While installing, be sure to check the box **"Add Python to PATH"**.
 
-2. **Скачать проект с GitHub.**
-   Открыть страницу проекта, нажать зелёную кнопку **Code**, а потом **Download ZIP**.
-   Распаковать архив в любую папку, например `C:\Projects\sql_danielsR`.
+2. **Download the project from GitHub.**
+   Open the project page, press the green **Code** button, then **Download ZIP**.
+   Unpack the archive to any folder, for example `C:\Projects\sql_danielsR`.
 
-   (Можно и через Git:
+   (You can also use Git:
    ```
-   git clone ссылка-на-репозиторий
+   git clone the-link-to-the-repository
    ```
    )
 
-3. **Открыть командную строку.**
-   Нажать `Win + R`, написать `cmd`, нажать Enter.
+3. **Open the command line.**
+   Press `Win + R`, type `cmd` and press Enter.
 
-4. **Перейти в папку проекта:**
+4. **Go to the project folder:**
 
 ```
 cd C:\Projects\sql_danielsR
 ```
 
-5. **Запустить проект:**
+5. **Run the project:**
 
 ```
 python app.py
 ```
 
-Если пишет, что `python` не найден — попробовать `py app.py`.
-Дальше просто пишем цифру пункта меню и нажимаем Enter.
+If it says that `python` is not found — try `py app.py`.
+Then just type the number of the menu option and press Enter.
 
-## Что стоит знать
+## Good to know
 
-- База хранится в файле `for_game.db`, он появится в папке сам.
-- Все данные хранятся просто в файле, его можно копировать и переносить.
-- Если хочется вернуть базу в исходное состояние — удалить `for_game.db` и запустить проект заново.
+- The database is stored in the file `for_game.db`, it appears in the folder by itself.
+- All the data is just a file, you can copy it and move it somewhere.
+- If you want to reset the database — delete `for_game.db` and run the project again.
